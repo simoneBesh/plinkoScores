@@ -81,23 +81,56 @@ text (300, 350, 500);
 text (500, 430, 500);
 line = createSprite (240, 480, 480, 10);
 
-if(particle.body.position.x<100){
-  score=score+500;
-} 
-if (particle.body.position.x>101 && 300){
-  score=score+300;
+//errors here
+if (particleSingle!=null){
+  particleSingle.display();
+  if (particleSingle.body.position.y>760){
+    if(particleSingle.body.position.x<100){
+      score=score+500;
+      particleSingle=null;
+      if (count>=5){
+        gamestate="end";
+      }
+    } 
+  }
 }
-if (particle.body.position.x>301 && 480){
-  score=score+100;
+
+if (particleSingle!=null){
+  particleSingle.display();
+  if (particleSingle.body.position.y>760){
+    if (particleSingle.body.position.x>101 && 300){
+      score=score+300;
+    }
+      particleSingle=null;
+      if (count>=5){
+        gamestate="end";
+      }
+    } 
+  }
 }
+
+if (particleSingle!=null){
+  particleSingle.display();
+  if (particleSingle.body.position.y>760){
+    if (particleSingle.body.position.x>301 && 480){
+      score=score+100;
+    }
+      particleSingle=null;
+      if (count>=5){
+        gamestate="end";
+      }
+    } 
+  }
+
+
 
 drawSprites();
-}
+
 
 function mousePressed(){
-  if (gamestate==="end"){
+  if (gamestate!=="end"){
     count++;
-    particle=new Particle (mouseX, 10, 10, 10); 
+    particleSingle=new Particle (mouseX, 10, 10, 10); 
   }
 
 }
