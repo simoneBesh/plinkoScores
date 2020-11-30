@@ -16,6 +16,7 @@ var score = 0;
 var particleSingle; 
 var turn = 0;
 var gamestate="PLAY"; 
+var turn2=5;
 
 function setup() {
   createCanvas(480,800);
@@ -52,14 +53,14 @@ Engine.run(engine);
 function draw() {
   background(0, 0, 0);  
 
-if (frameCount%20===0){
-  particlesArr.push(new particle(random(width/2-100, width/2+100), 10, 10));
-}
+//if (frameCount%20===0){
+//  particlesArr.push(new particle(random(width/2-100, width/2+100), 10, 10));
+//}
 
 ground1.display();
 //console.log(ground1.body.position.x + "," + ground1.body.position.y);
 for (var g=0; g<particlesArr.length; g++){
-  console.log(particlesArr[g]);
+  //console.log(particlesArr[g]);
   particlesArr[g].display();
 }
 for (var o=0; o<plinkoArr.length; o++){
@@ -79,7 +80,7 @@ text (200, 190, 500);
 text (200, 270, 500);
 text (300, 350, 500);
 text (500, 430, 500);
-line = createSprite (240, 480, 480, 10);
+//line = createSprite (240, 480, 480, 10);
 
 //errors here
 if (particleSingle!=null){
@@ -87,8 +88,9 @@ if (particleSingle!=null){
   if (particleSingle.body.position.y>760){
     if(particleSingle.body.position.x<100){
       score=score+500;
+      console.log(score);
       particleSingle=null;
-      if (count>=5){
+      if (turn>=5){
         gamestate="end";
       }
     } 
@@ -98,25 +100,27 @@ if (particleSingle!=null){
 if (particleSingle!=null){
   particleSingle.display();
   if (particleSingle.body.position.y>760){
-    if (particleSingle.body.position.x>101 && 300){
+    if (particleSingle.body.position.x>101 && particleSingle.body.position.x<300){
       score=score+300;
+      console.log(score);
     }
       particleSingle=null;
-      if (count>=5){
+      if (turn>=5){
         gamestate="end";
       }
     } 
   }
-}
+
 
 if (particleSingle!=null){
   particleSingle.display();
   if (particleSingle.body.position.y>760){
-    if (particleSingle.body.position.x>301 && 480){
+    if (particleSingle.body.position.x>301 && particleSingle.body.position.x<480){
       score=score+100;
+      console.log(score);
     }
       particleSingle=null;
-      if (count>=5){
+      if (turn>=5&&turn2<=0){
         gamestate="end";
       }
     } 
@@ -125,12 +129,14 @@ if (particleSingle!=null){
 
 
 drawSprites();
-
+}
 
 function mousePressed(){
   if (gamestate!=="end"){
-    count++;
-    particleSingle=new Particle (mouseX, 10, 10, 10); 
+    turn++;
+    turn2--;
+    particleSingle=new particle (mouseX, 10, 10, 10); 
   }
 
 }
+
